@@ -108,7 +108,6 @@ EOF
 %{__mkdir_p} %{buildroot}%{_datadir}/applications
 %{__cat} > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name=Vega Strike
 Comment=3D OpenGL spaceflight simulator
 Exec=%{_gamesbindir}/vslauncher
