@@ -1,6 +1,6 @@
 Name:		vegastrike
 Version:	0.4.3
-Release:	%mkrel 13
+Release:	%mkrel 14
 Summary:	3D OpenGL spaceflight simulator
 License:	GPL
 Group:		Games/Arcade
@@ -70,6 +70,7 @@ the space beyond.
 %patch12 -p1 -b .gcc41
 %patch13 -p1 -b .boost
 %patch14 -p1 -b .openal
+
 %build
 (cd vssetup/src && %make RPM_OPT_FLAGS="%{optflags}")
 %{__perl} -pi -e "s#lib/python#%{_lib}/python#g" configure.in
@@ -94,16 +95,7 @@ export WANT_AUTOCONF_2_5=1
 %{__mkdir_p} %{buildroot}%{_mandir}
 for i in *.6; do %{__install} -m 644 $i -D %{buildroot}%{_mandir}/man6/$i; done
 
-%{__install} -d %{buildroot}%{_menudir}
-%{__cat} <<EOF > %{buildroot}%{_menudir}/%{name}
-?package(%{name}):command="%{_gamesbindir}/vslauncher" \
-		icon=%{name}.png \
-		needs="x11" \
-		section="More Applications/Games/Arcade" \
-		title="Vega Strike"\
-		longtitle="3D OpenGL spaceflight simulator" \
-		xdg=true
-EOF
+
 
 %{__mkdir_p} %{buildroot}%{_datadir}/applications
 %{__cat} > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -114,7 +106,7 @@ Exec=%{_gamesbindir}/vslauncher
 Icon=%{name}
 Terminal=false
 Type=Application
-Categories=Game;ArcadeGame;X-MandrivaLinux-MoreApplications-Games-Arcade;
+Categories=Game;Arcade;
 EOF
 
 %{__install} -m 644 %{SOURCE11} -D %{buildroot}%{_miconsdir}/%{name}.png
@@ -137,7 +129,6 @@ EOF
 %files
 %defattr(644,root,root,755)
 %doc README
-%{_menudir}/%{name}
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
