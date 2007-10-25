@@ -30,7 +30,7 @@ BuildRequires:	autoconf >= 2.5
 BuildRequires:	gtk2-devel
 BuildRequires:	freealut-devel
 BuildRequires:	jpeg-devel
-BuildRequires:	libboost-devel
+BuildRequires:	boost-devel
 BuildRequires:	libexpat-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	Mesa-common-devel
