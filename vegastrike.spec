@@ -46,7 +46,6 @@ BuildRequires:	SDL_net-devel
 BuildRequires:	X11-devel
 BuildRequires:	zlib-devel
 BuildRequires:  ogre-devel
-Requires:	%{name}-data
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -74,6 +73,9 @@ the space beyond.
 #%patch13 -p1 -b .boost
 %patch14 -p1 -b .openal
 
+iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
+touch -r README README.tmp
+mv README.tmp README
 
 # we want to use the system version of expat.h
 rm objconv/mesher/expat.h
@@ -99,9 +101,23 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 
 %install
 %{__rm} -rf %{buildroot}
-#(cd vssetup/src %makeinstall bindir=%{buildroot}%{_gamesbindir})
-%makeinstall bindir=%{buildroot}%{_gamesbindir}
-%{__install} -m 755 vsinstall %{buildroot}%{_gamesbindir}/vsinstall
+%makeinstall
+
+%{__mkdir_p} %{buildroot}%{_libexecdir}/%{name}
+chmod +x %{buildroot}%{_prefix}/objconv/*
+mv %{buildroot}%{_prefix}/objconv/* \
+  %{buildroot}%{_libexecdir}/%{name}
+for i in asteroidgen base_maker mesh_xml mesher replace tempgen trisort \
+         vsrextract vsrmake; do
+  mv %{buildroot}%{_bindir}/$i %{buildroot}%{_libexecdir}/%{name};
+done
+
+
+%{__mkdir_p} %{buildroot}%{_gamesbindir}
+for i in vegaserver vegastrike vssetup; do
+  mv %{buildroot}%{_bindir}/$i %{buildroot}%{_gamesbindir};
+done
+
 
 %{__mkdir_p} %{buildroot}%{_mandir}
 for i in *.6; do %{__install} -m 644 $i -D %{buildroot}%{_mandir}/man6/$i; done
@@ -113,7 +129,7 @@ for i in *.6; do %{__install} -m 644 $i -D %{buildroot}%{_mandir}/man6/$i; done
 [Desktop Entry]
 Name=Vega Strike
 Comment=3D OpenGL spaceflight simulator
-Exec=%{_gamesbindir}/vslauncher
+Exec=%{_gamesbindir}/vegastrike
 Icon=%{name}
 Terminal=false
 Type=Application
@@ -152,5 +168,7 @@ EOF
 %dir %{_gamesdatadir}/%{name}
 %defattr(755,root,root,755)
 %{_gamesbindir}/*
+%{_libexecdir}/%{name}
+
 
 
