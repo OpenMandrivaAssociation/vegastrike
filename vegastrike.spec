@@ -7,7 +7,7 @@ Group:		Games/Arcade
 URL:		http://vegastrike.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.bz2
 Source1:	%{name}-manpages.tar.bz2
-Source2:	vssetup.tar.bz2
+#Source2:	vssetup.tar.bz2
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
@@ -21,7 +21,7 @@ Patch5:		vegastrike-0.5.0-paths-fix.patch
 #Patch8:		vegastrike-0.4.3-gcc4-fix.patch
 Patch9:		vegastrike-0.5.0-64-bit.patch
 #Patch10:	vegastrike-0.4.3-gtk2.patch
-Patch11:	vegastrike-0.4.2-vssetup-fix.patch
+Patch11:	vegastrike-0.5.0-vssetup-fix.patch
 #Patch12:	vegastrike-0.4.3-gcc41-fix.patch
 #Patch13:	vegastrike-0.4.3-use-system-boost.patch
 Patch14:	vegastrike-0.5.0-openal.patch
@@ -58,7 +58,7 @@ enough cash to scrape together a life. Yet danger lurks in
 the space beyond.
 
 %prep
-%setup -q -n %{name}-source-%{version} -a1 -a2
+%setup -q -n %{name}-source-%{version} -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -79,7 +79,7 @@ the space beyond.
 rm objconv/mesher/expat.h
 
 %build
-(cd vssetup/src && %make RPM_OPT_FLAGS="%{optflags}")
+#(cd vssetup/src && %make RPM_OPT_FLAGS="%{optflags}")
 #%{__perl} -pi -e "s#lib/python#%{_lib}/python#g" configure.in
 sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 
@@ -99,7 +99,7 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 
 %install
 %{__rm} -rf %{buildroot}
-(cd vssetup/src %makeinstall bindir=%{buildroot}%{_gamesbindir})
+#(cd vssetup/src %makeinstall bindir=%{buildroot}%{_gamesbindir})
 %makeinstall bindir=%{buildroot}%{_gamesbindir}
 %{__install} -m 755 vsinstall %{buildroot}%{_gamesbindir}/vsinstall
 
