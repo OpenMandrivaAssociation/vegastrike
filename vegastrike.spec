@@ -1,30 +1,23 @@
 Name:		vegastrike
 Version:	0.5.0
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
 Group:		Games/Arcade
 URL:		http://vegastrike.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.bz2
 Source1:	%{name}-manpages.tar.bz2
-#Source2:	vssetup.tar.bz2
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
 Patch0:		vegastrike-0.4.2-char-fix.patch
 Patch1:		vegastrike-0.4.2-docs-fix.patch
 Patch2:		vegastrike-0.4.2-launcher-fix.patch
-#Patch3:		vegastrike-0.4.3-makefiles-fix.patch
-#Patch4:		vegastrike-0.4.2-opengl-fix.patch
-Patch5:		vegastrike-0.5.0-paths-fix.patch
-#Patch6:		vegastrike-0.4.2-posh-fix.patch
-#Patch8:		vegastrike-0.4.3-gcc4-fix.patch
-Patch9:		vegastrike-0.5.0-64-bit.patch
-#Patch10:	vegastrike-0.4.3-gtk2.patch
-Patch11:	vegastrike-0.5.0-vssetup-fix.patch
-#Patch12:	vegastrike-0.4.3-gcc41-fix.patch
-#Patch13:	vegastrike-0.4.3-use-system-boost.patch
-Patch14:	vegastrike-0.5.0-openal.patch
+Patch3:		vegastrike-0.5.0-paths-fix.patch
+Patch4:		vegastrike-0.5.0-64-bit.patch
+Patch5:		vegastrike-0.5.0-vssetup-fix.patch
+Patch6:		vegastrike-0.5.0-openal.patch
+Patch7:		vegastrike-0.4.3-sys-python.patch
 Requires:	%{name}-data = %{version}
 BuildRequires:	autoconf >= 2.5
 BuildRequires:	gtk2-devel
@@ -61,17 +54,11 @@ the space beyond.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
-#%patch4 -p1
-%patch5 -p1
-#%patch6 -p1
-#%patch8 -p1 -b .gcc4
-%patch9 -p1 -b .64-bit
-#%patch10 -p1 -b .gtk2
-%patch11 -p1 -b .vssetup
-#%patch12 -p1 -b .gcc41
-#%patch13 -p1 -b .boost
-%patch14 -p1 -b .openal
+%patch3 -p1
+%patch4 -p1 -b .64-bit
+%patch5 -p1 -b .vssetup
+%patch6 -p1 -b .openal
+%patch7 -p1 -b .sys-python
 
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
@@ -81,21 +68,14 @@ mv README.tmp README
 rm objconv/mesher/expat.h
 
 %build
-#(cd vssetup/src && %make RPM_OPT_FLAGS="%{optflags}")
-#%{__perl} -pi -e "s#lib/python#%{_lib}/python#g" configure.in
 sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 
-#export WANT_AUTOCONF_2_5=1
-#%{__aclocal}
-#%{__autoheader}
-#%{__automake} --foreign --add-missing
-#%{__autoconf}
 %configure2_5x	--with-bindir=%{_gamesbindir} \
 		--with-data-dir=%{_gamesdatadir}/%{name} \
 		--enable-release \
 		--enable-flags="%{optflags}" \
-		--enable-stencil-buffer
-#--with-boost=system
+		--enable-stencil-buffer \
+		--disable-boost
 
 %make
 
