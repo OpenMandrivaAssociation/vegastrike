@@ -59,7 +59,6 @@ the space beyond.
 %patch5 -p1 -b .vssetup
 %patch6 -p1 -b .openal
 %patch7 -p1 -b .sys-python
-
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
