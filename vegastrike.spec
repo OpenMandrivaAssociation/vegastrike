@@ -1,6 +1,8 @@
+%define Werror_cflags %nil
+
 Name:		vegastrike
 Version:	0.5.0
-Release:	%mkrel 3
+Release:	%mkrel 4
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
 Group:		Games/Arcade
@@ -18,6 +20,7 @@ Patch4:		vegastrike-0.5.0-64-bit.patch
 Patch5:		vegastrike-0.5.0-vssetup-fix.patch
 Patch6:		vegastrike-0.5.0-openal.patch
 Patch7:		vegastrike-0.4.3-sys-python.patch
+Patch8:		vegastrike-0.5.0-fix-format-errors.patch
 Requires:	%{name}-data = %{version}
 BuildRequires:	autoconf >= 2.5
 BuildRequires:	gtk2-devel
@@ -59,6 +62,7 @@ the space beyond.
 %patch5 -p1 -b .vssetup
 %patch6 -p1 -b .openal
 %patch7 -p1 -b .sys-python
+%patch8 -p1 -b .format
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
