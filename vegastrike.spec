@@ -2,7 +2,7 @@
 
 Name:		vegastrike
 Version:	0.5.0
-Release:	%mkrel 4
+Release:	%mkrel 5
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
 Group:		Games/Arcade
@@ -27,7 +27,7 @@ BuildRequires:	gtk2-devel
 BuildRequires:	freealut-devel
 BuildRequires:	jpeg-devel
 #(eandry) TO FIX - system boost breaks build
-#BuildRequires:	boost-devel
+BuildRequires:	boost-devel
 BuildRequires:	expat-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	Mesa-common-devel
@@ -78,7 +78,8 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 		--enable-release \
 		--enable-flags="%{optflags}" \
 		--enable-stencil-buffer \
-		--disable-boost
+		--with-boost=system
+		#--disable-boost
 
 %make
 
@@ -116,7 +117,7 @@ Exec=%{_gamesbindir}/vegastrike
 Icon=%{name}
 Terminal=false
 Type=Application
-Categories=Game;Arcade;
+Categories=Game;ArcadeGame;
 EOF
 
 %{__install} -m 644 %{SOURCE11} -D %{buildroot}%{_miconsdir}/%{name}.png
