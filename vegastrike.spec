@@ -78,8 +78,7 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 		--enable-release \
 		--enable-flags="%{optflags}" \
 		--enable-stencil-buffer \
-		--with-boost=system
-		#--disable-boost
+		--disable-boost
 
 %make
 
