@@ -2,6 +2,7 @@
 
 Name:		vegastrike
 Version:	0.5.0
+%define		subrel 1
 Release:	%mkrel 6
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
@@ -21,12 +22,13 @@ Patch5:		vegastrike-0.5.0-vssetup-fix.patch
 Patch6:		vegastrike-0.5.0-openal.patch
 Patch7:		vegastrike-0.4.3-sys-python.patch
 Patch8:		vegastrike-0.5.0-fix-format-errors.patch
+Patch9:		vegastrike-0.5.0-gcc44-fix.patch
 Requires:	%{name}-data = %{version}
 BuildRequires:	autoconf >= 2.5
 BuildRequires:	gtk2-devel
 BuildRequires:	freealut-devel
 BuildRequires:	jpeg-devel
-#(eandry) TO FIX - system boost breaks build
+#(eandry) TO FIX - system boost breaks build ~~ ...that's still true :-/
 BuildRequires:	boost-devel
 BuildRequires:	expat-devel
 BuildRequires:	libvorbis-devel
@@ -41,7 +43,7 @@ BuildRequires:	SDL_mixer-devel
 BuildRequires:	SDL_net-devel
 BuildRequires:	X11-devel
 BuildRequires:	zlib-devel
-BuildRequires:  ogre-devel
+BuildRequires:	ogre-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -63,6 +65,7 @@ the space beyond.
 %patch6 -p1 -b .openal
 %patch7 -p1 -b .sys-python
 %patch8 -p1 -b .format
+%patch9 -p1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -77,8 +80,7 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 		--with-data-dir=%{_gamesdatadir}/%{name} \
 		--enable-release \
 		--enable-flags="%{optflags}" \
-		--enable-stencil-buffer \
-		--disable-boost
+		--enable-stencil-buffer
 
 %make
 
@@ -89,10 +91,10 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 %{__mkdir_p} %{buildroot}%{_libexecdir}/%{name}
 chmod +x %{buildroot}%{_prefix}/objconv/*
 mv %{buildroot}%{_prefix}/objconv/* \
-  %{buildroot}%{_libexecdir}/%{name}
+	%{buildroot}%{_libexecdir}/%{name}
 for i in asteroidgen base_maker mesh_xml mesher replace tempgen trisort \
-         vsrextract vsrmake; do
-  mv %{buildroot}%{_bindir}/$i %{buildroot}%{_libexecdir}/%{name};
+	vsrextract vsrmake; do
+mv %{buildroot}%{_bindir}/$i %{buildroot}%{_libexecdir}/%{name};
 done
 
 
