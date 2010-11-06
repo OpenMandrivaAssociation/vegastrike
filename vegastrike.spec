@@ -22,6 +22,7 @@ Patch6:		vegastrike-0.5.0-openal.patch
 Patch7:		vegastrike-0.4.3-sys-python.patch
 Patch8:		vegastrike-0.5.0-fix-format-errors.patch
 Patch9:		vegastrike-0.5.0-gcc44-fix.patch
+Patch10:	vegastrike-0.5.0-gcc45.patch
 Requires:	%{name}-data = %{version}
 BuildRequires:	autoconf >= 2.5
 BuildRequires:	gtk2-devel
@@ -65,6 +66,7 @@ the space beyond.
 %patch7 -p1 -b .sys-python
 %patch8 -p1 -b .format
 %patch9 -p1
+%patch10 -p1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
