@@ -2,7 +2,7 @@
 
 Name:		vegastrike
 Version:	0.5.0
-Release:	%mkrel 9
+Release:	%mkrel 10
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
 Group:		Games/Arcade
