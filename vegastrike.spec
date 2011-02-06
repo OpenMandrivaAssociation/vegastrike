@@ -23,6 +23,7 @@ Patch7:		vegastrike-0.4.3-sys-python.patch
 Patch8:		vegastrike-0.5.0-fix-format-errors.patch
 Patch9:		vegastrike-0.5.0-gcc44-fix.patch
 Patch10:	vegastrike-0.5.0-gcc45.patch
+Patch11:	vegastrike-0.5.0-link.patch
 Requires:	%{name}-data = %{version}
 BuildRequires:	autoconf >= 2.5
 BuildRequires:	gtk2-devel
@@ -67,6 +68,7 @@ the space beyond.
 %patch8 -p1 -b .format
 %patch9 -p1
 %patch10 -p1
+%patch11 -p0 -b .link
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -75,11 +77,11 @@ mv README.tmp README
 rm objconv/mesher/expat.h
 
 %build
-sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
-
-%configure2_5x	--with-bindir=%{_gamesbindir} \
+autoreconf -fi
+%configure2_5x	--bindir=%{_gamesbindir} \
 		--with-data-dir=%{_gamesdatadir}/%{name} \
 		--enable-release \
+		--with-boost=system \
 		--enable-flags="%{optflags}" \
 		--enable-stencil-buffer
 
@@ -87,7 +89,7 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 
 %install
 %{__rm} -rf %{buildroot}
-%makeinstall
+%makeinstall_std
 
 %{__mkdir_p} %{buildroot}%{_libexecdir}/%{name}
 chmod +x %{buildroot}%{_prefix}/objconv/*
