@@ -24,6 +24,7 @@ Patch8:		vegastrike-0.5.0-fix-format-errors.patch
 Patch9:		vegastrike-0.5.0-gcc44-fix.patch
 Patch10:	vegastrike-0.5.0-gcc45.patch
 Patch11:	vegastrike-0.5.0-link.patch
+Patch12:	vegastrike-0.5.0-boost-make_shared.patch
 Requires:	%{name}-data = %{version}
 BuildRequires:	autoconf >= 2.5
 BuildRequires:	gtk2-devel
@@ -69,6 +70,7 @@ the space beyond.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p0 -b .link
+%patch12 -p1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -82,7 +84,7 @@ autoreconf -fi
 		--with-data-dir=%{_gamesdatadir}/%{name} \
 		--enable-release \
 		--with-boost=system \
-		--enable-flags="%{optflags}" \
+		--enable-flags="%{optflags} -DBOOST_PYTHON_NO_PY_SIGNATURES" \
 		--enable-stencil-buffer
 
 %make
