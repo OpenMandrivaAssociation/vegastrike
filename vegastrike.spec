@@ -2,7 +2,7 @@
 
 Name:		vegastrike
 Version:	0.5.0
-Release:	%mkrel 10
+Release:	%mkrel 11
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
 Group:		Games/Arcade
@@ -39,6 +39,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	openal-devel
 BuildRequires:	python-devel
 BuildRequires:	libvorbis-devel
+BuildRequires:	ogre-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
