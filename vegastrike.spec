@@ -26,25 +26,19 @@ Patch10:	vegastrike-0.5.0-gcc45.patch
 Patch11:	vegastrike-0.5.0-link.patch
 Patch12:	vegastrike-0.5.0-boost-make_shared.patch
 Requires:	%{name}-data = %{version}
-BuildRequires:	autoconf >= 2.5
-BuildRequires:	gtk2-devel
-BuildRequires:	freealut-devel
-BuildRequires:	jpeg-devel
-#(eandry) TO FIX - system boost breaks build ~~ ...that's still true :-/
+BuildRequires:	mesagl-devel
+BuildRequires:	mesaglu-devel
+BuildRequires:	mesaglut-devel
+BuildRequires:	SDL-devel
 BuildRequires:	boost-devel
 BuildRequires:	expat-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	Mesa-common-devel
-BuildRequires:	mesaglu-devel
-BuildRequires:	nas-devel
-BuildRequires:	oggvorbis-devel
-BuildRequires:	openal-devel
+BuildRequires:	gtk+2-devel
+BuildRequires:	jpeg-devel
 BuildRequires:	png-devel
-BuildRequires:	python-devel
-BuildRequires:	SDL_mixer-devel
-BuildRequires:	SDL_net-devel
-BuildRequires:	X11-devel
 BuildRequires:	zlib-devel
+BuildRequires:	openal-devel
+BuildRequires:	python-devel
+BuildRequires:	libvorbis-devel
 BuildRequires:	ogre-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -91,7 +85,7 @@ autoreconf -fi
 
 %install
 %{__rm} -rf %{buildroot}
-%makeinstall_std
+%makeinstall
 
 %{__mkdir_p} %{buildroot}%{_libexecdir}/%{name}
 chmod +x %{buildroot}%{_prefix}/objconv/*
