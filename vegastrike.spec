@@ -28,7 +28,6 @@ Patch12:	vegastrike-0.5.0-boost-make_shared.patch
 Requires:	%{name}-data = %{version}
 BuildRequires:	mesagl-devel
 BuildRequires:	mesaglu-devel
-BuildRequires:	mesaglut-devel
 BuildRequires:	SDL-devel
 BuildRequires:	boost-devel
 BuildRequires:	expat-devel
