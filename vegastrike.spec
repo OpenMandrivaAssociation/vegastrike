@@ -51,19 +51,19 @@ the space beyond.
 
 %prep
 %setup -q -n %{name}-src-%{version} -a1
-# %patch0 -p1
-# %patch1 -p1
-# %patch2 -p1
-# %patch3 -p1
-# %patch4 -p1 -b .64-bit
-# %patch5 -p1 -b .vssetup
-# %patch6 -p1 -b .openal
-# %patch7 -p1 -b .sys-python
-# %patch8 -p1 -b .format
-# %patch9 -p1
-# %patch10 -p1
-# %patch11 -p0 -b .link
-# %patch12 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1 .path
+%patch4 -p1 -b .64-bit
+%patch5 -p1 -b .vssetup
+%patch6 -p1 -b .openal
+%patch7 -p1 -b .sys-python
+%patch8 -p1 -b .format
+%patch9 -p1
+%patch10 -p1
+%patch11 -p0 -b .link
+%patch12 -p1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
