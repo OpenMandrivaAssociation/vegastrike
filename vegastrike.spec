@@ -38,7 +38,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	openal-devel
 BuildRequires:	python-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	ogre-devel
+BuildRequires:	ogre-devel mesa-common-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
