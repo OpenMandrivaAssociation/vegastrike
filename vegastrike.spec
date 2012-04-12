@@ -51,9 +51,9 @@ the space beyond.
 
 %prep
 %setup -q -n %{name}-src-%{version} -a1
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+# %patch0 -p1
+# %patch1 -p1
+# %patch2 -p1
 %patch3 -p1 
 %patch4 -p1 -b .64-bit
 %patch5 -p1 -b .vssetup
