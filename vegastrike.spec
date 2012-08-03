@@ -1,33 +1,23 @@
 %define Werror_cflags %nil
+%define rel 1
 
 Name:		vegastrike
-Version:	0.5.1.r1
+Version:	0.5.1	
 Release:	%mkrel 1
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
 Group:		Games/Arcade
 URL:		http://vegastrike.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.r%{rel}.tar.bz2
 Source1:	%{name}-manpages.tar.bz2
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-Patch0:		vegastrike-0.4.2-char-fix.patch
-Patch1:		vegastrike-0.4.2-docs-fix.patch
-Patch2:		vegastrike-0.4.2-launcher-fix.patch
-Patch3:		vegastrike-0.5.0-paths-fix.patch
-Patch4:		vegastrike-0.5.0-64-bit.patch
-Patch5:		vegastrike-0.5.0-vssetup-fix.patch
-Patch6:		vegastrike-0.5.0-openal.patch
-Patch7:		vegastrike-0.4.3-sys-python.patch
-Patch8:		vegastrike-0.5.0-fix-format-errors.patch
-Patch9:		vegastrike-0.5.0-gcc44-fix.patch
-Patch10:	vegastrike-0.5.0-gcc45.patch
-Patch11:	vegastrike-0.5.0-link.patch
-Patch12:	vegastrike-0.5.0-boost-make_shared.patch
 Requires:	%{name}-data = %{version}
+Suggests:	%{name}-sounds = %{version}
 BuildRequires:	mesagl-devel
 BuildRequires:	mesaglu-devel
+BuildRequires:	freeglut-devel
 BuildRequires:	SDL-devel
 BuildRequires:	boost-devel
 BuildRequires:	expat-devel
@@ -38,8 +28,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	openal-devel
 BuildRequires:	python-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	ogre-devel mesa-common-devel GL-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	ogre-devel
 
 %description
 Vega Strike is a GPL 3D OpenGL Action RPG space sim for
@@ -50,20 +39,7 @@ enough cash to scrape together a life. Yet danger lurks in
 the space beyond.
 
 %prep
-%setup -q -n %{name}-src-%{version} -a1
-# %patch0 -p1
-# %patch1 -p1
-# %patch2 -p1
-# %patch3 -p1 
-# %patch4 -p1 -b .64-bit
-# %patch5 -p1 -b .vssetup
-# %patch6 -p1 -b .openal
-# %patch7 -p1 -b .sys-python
-# %patch8 -p1 -b .format
-# %patch9 -p1
-# %patch10 -p1
-# %patch11 -p0 -b .link
-# %patch12 -p1
+%setup -q -n %{name}-src-%{version}.r%{rel} -a1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -77,14 +53,13 @@ autoreconf -fi
 		--with-data-dir=%{_gamesdatadir}/%{name} \
 		--enable-release \
 		--with-boost=system \
-		--enable-flags="%{optflags} -DBOOST_PYTHON_NO_PY_SIGNATURES" \
+		--enable-flags="%{optflags} -fpermissive -DBOOST_PYTHON_NO_PY_SIGNATURES" \
 		--enable-stencil-buffer
 
 %make
 
 %install
-%{__rm} -rf %{buildroot}
-%makeinstall
+%makeinstall_std
 
 %{__mkdir_p} %{buildroot}%{_libexecdir}/%{name}
 chmod +x %{buildroot}%{_prefix}/objconv/*
@@ -92,23 +67,14 @@ mv %{buildroot}%{_prefix}/objconv/* \
 	%{buildroot}%{_libexecdir}/%{name}
 for i in asteroidgen base_maker mesh_xml mesher replace tempgen trisort \
 	vsrextract vsrmake; do
-mv %{buildroot}%{_bindir}/$i %{buildroot}%{_libexecdir}/%{name};
+mv %{buildroot}%{_gamesbindir}/$i %{buildroot}%{_libexecdir}/%{name};
 done
-
-
-%{__mkdir_p} %{buildroot}%{_gamesbindir}
-for i in vegaserver vegastrike vssetup; do
-  mv %{buildroot}%{_bindir}/$i %{buildroot}%{_gamesbindir};
-done
-
 
 %{__mkdir_p} %{buildroot}%{_mandir}
 for i in *.6; do %{__install} -m 644 $i -D %{buildroot}%{_mandir}/man6/$i; done
 
-
-
 %{__mkdir_p} %{buildroot}%{_datadir}/applications
-%{__cat} > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
+%{__cat} > %{buildroot}%{_datadir}/applications/%{_real_vendor}-%{name}.desktop << EOF
 [Desktop Entry]
 Name=Vega Strike
 Comment=3D OpenGL spaceflight simulator
@@ -127,21 +93,7 @@ EOF
 
 %{__perl} -pi -e 's|\r$||g' README
 
-%if %mdkversion < 200900
-%post
-%{update_menus}
-%endif
-
-%if %mdkversion < 200900
-%postun
-%{clean_menus}
-%endif
-
-%clean
-%{__rm} -rf %{buildroot}
-
 %files
-%defattr(644,root,root,755)
 %doc README
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
@@ -154,4 +106,60 @@ EOF
 %{_libexecdir}/%{name}
 
 
+%changelog
+
+* Tue Jul 31 2012 fwang <fwang> 0.5.1-13.mga3
++ Revision: 276859
+- update install dir
+- rebuild for new boost
+
+* Sun Jul 01 2012 supp <supp> 0.5.1-12.mga3
++ Revision: 265952
+- add -fpermissibe optflags as per ML recomendation to make it build
+- update SPEC from beta->release
+- update to final 0.5.1 release
+
+* Wed May 30 2012 fwang <fwang> 0.5.1-11.mga3
++ Revision: 250032
+- rebuild for new boost
+
+* Sat Mar 03 2012 supp <supp> 0.5.1-10.mga2
++ Revision: 217645
+- update to 0.5.1, Beta2
+
+* Mon Nov 28 2011 fwang <fwang> 0.5.1-9.mga2
++ Revision: 173668
+- rebuild for new boost
+
+* Sun Sep 18 2011 fwang <fwang> 0.5.1-8.mga2
++ Revision: 145018
+- it does not like latest ffmpeg
+- br ffmpeg
+- fix build with latest libpng
+- rebuild for new libpng
+- use freeglut
+- more boost-mt fix
+- link against boost-mt
+- rebuild for new boost
+
+* Sun May 15 2011 pterjan <pterjan> 0.5.1-6.mga1
++ Revision: 99038
+- Rebuild for fixed find-requires
+
+* Wed Apr 27 2011 wally <wally> 0.5.1-5.mga1
++ Revision: 92012
+- use _real_vendor macro in desktop file name
+
+* Tue Apr 26 2011 supp <supp> 0.5.1-4.mga1
++ Revision: 91785
+- fix desktop file (mga#954)
+
+* Sun Apr 03 2011 supp <supp> 0.5.1-3.mga1
++ Revision: 80032
+- update to official 0.5.1 beta1 release, add suggests for speech+music
+
+* Mon Feb 28 2011 supp <supp> 0.5.1-1.mga1
++ Revision: 61871
+- update to 0.5.1 beta 1...
+- imported package vegastrike
 
