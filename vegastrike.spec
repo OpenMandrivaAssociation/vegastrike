@@ -54,7 +54,8 @@ autoreconf -fi
 		--enable-release \
 		--with-boost=system \
 		--enable-flags="%{optflags} -fpermissive -DBOOST_PYTHON_NO_PY_SIGNATURES" \
-		--enable-stencil-buffer
+		--enable-stencil-buffer \
+		--with-lib-dir=%{_libdir}
 
 %make
 
