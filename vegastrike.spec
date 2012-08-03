@@ -28,7 +28,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	openal-devel
 BuildRequires:	python-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	ogre-devel
+BuildRequires:	ogre-devel mesa-common-devel GL-devel
 
 %description
 Vega Strike is a GPL 3D OpenGL Action RPG space sim for
@@ -104,62 +104,3 @@ EOF
 %defattr(755,root,root,755)
 %{_gamesbindir}/*
 %{_libexecdir}/%{name}
-
-
-%changelog
-
-* Tue Jul 31 2012 fwang <fwang> 0.5.1-13.mga3
-+ Revision: 276859
-- update install dir
-- rebuild for new boost
-
-* Sun Jul 01 2012 supp <supp> 0.5.1-12.mga3
-+ Revision: 265952
-- add -fpermissibe optflags as per ML recomendation to make it build
-- update SPEC from beta->release
-- update to final 0.5.1 release
-
-* Wed May 30 2012 fwang <fwang> 0.5.1-11.mga3
-+ Revision: 250032
-- rebuild for new boost
-
-* Sat Mar 03 2012 supp <supp> 0.5.1-10.mga2
-+ Revision: 217645
-- update to 0.5.1, Beta2
-
-* Mon Nov 28 2011 fwang <fwang> 0.5.1-9.mga2
-+ Revision: 173668
-- rebuild for new boost
-
-* Sun Sep 18 2011 fwang <fwang> 0.5.1-8.mga2
-+ Revision: 145018
-- it does not like latest ffmpeg
-- br ffmpeg
-- fix build with latest libpng
-- rebuild for new libpng
-- use freeglut
-- more boost-mt fix
-- link against boost-mt
-- rebuild for new boost
-
-* Sun May 15 2011 pterjan <pterjan> 0.5.1-6.mga1
-+ Revision: 99038
-- Rebuild for fixed find-requires
-
-* Wed Apr 27 2011 wally <wally> 0.5.1-5.mga1
-+ Revision: 92012
-- use _real_vendor macro in desktop file name
-
-* Tue Apr 26 2011 supp <supp> 0.5.1-4.mga1
-+ Revision: 91785
-- fix desktop file (mga#954)
-
-* Sun Apr 03 2011 supp <supp> 0.5.1-3.mga1
-+ Revision: 80032
-- update to official 0.5.1 beta1 release, add suggests for speech+music
-
-* Mon Feb 28 2011 supp <supp> 0.5.1-1.mga1
-+ Revision: 61871
-- update to 0.5.1 beta 1...
-- imported package vegastrike
-
