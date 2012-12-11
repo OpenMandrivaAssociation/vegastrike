@@ -1,0 +1,11 @@
+--- branches/vegastrike_0_5_1/vegastrike/src/cmd/music.cpp	2012/04/11 00:50:39	13354
++++ branches/vegastrike_0_5_1/vegastrike/src/cmd/music.cpp	2012/04/11 00:59:02	13355
+@@ -448,6 +448,8 @@
+             if (foundcache) {
+                 *me->music_load_info = wherecache->second;
+                 me->freeWav = false;
++            } else if ( !AUDLoadSoundFile( songname, me->music_load_info, true ) ) { 	 
++	        VSFileSystem::vs_dprintf(1, "Failed to load music file \"%s\"", songname);
+             }
+         }
+         if (me->freeWav && docacheme) {

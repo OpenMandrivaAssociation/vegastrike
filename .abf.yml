@@ -1,6 +1,4 @@
+---
 sources:
-  "vegastrike-16x16.png:"	6a1d3b9c0590ee4813e63152f25abc57867279f0
-  "vegastrike-32x32.png:"	3b0848ad7b7da89aa195aac903431a3b26ec32b1
-  "vegastrike-48x48.png:"	a041e16d8fc8557220d5638dd625900b7891b58e
-  "vegastrike-manpages.tar.bz2:"	c3d8ac467e18a9216af569fe2392f600341eaa18
-  "vegastrike-src-0.5.1.r1.tar.bz2:"	6314a0fc05cf66053e20272916976c0c16dcf048
+  vegastrike-src-0.5.1.r1.tar.bz2: 6314a0fc05cf66053e20272916976c0c16dcf048
+  vegastrike-manpages.tar.bz2: c3d8ac467e18a9216af569fe2392f600341eaa18

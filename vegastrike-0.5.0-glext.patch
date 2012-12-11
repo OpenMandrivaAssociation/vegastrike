@@ -1,0 +1,11 @@
+diff -up vegastrike-source-0.5.0/src/gldrv/gl_globals.h.foo vegastrike-source-0.5.0/src/gldrv/gl_globals.h
+--- vegastrike-source-0.5.0/src/gldrv/gl_globals.h.foo	2008-04-26 11:59:59.000000000 +0200
++++ vegastrike-source-0.5.0/src/gldrv/gl_globals.h	2009-08-03 13:30:27.000000000 +0200
+@@ -89,6 +89,7 @@ struct GFXStats{
+     #include <GL/glut.h>
+ #include "gl_undefined_extensions.h"
+ #undef __glext_h_
++#undef GL_VERSION_1_3
+ 
+     #include <GL/glext.h>
+ #endif

@@ -1,0 +1,19 @@
+--- src/python/init.cpp.orig	2011-11-16 02:52:15.000000000 -0600
++++ src/python/init.cpp	2012-04-04 22:27:55.472793333 -0500
+@@ -285,7 +285,6 @@
+     std::string modpaths( "" );
+     //Find all the mods dir (ignore homedir)
+     for (unsigned int i = 1; i < VSFileSystem::Rootdir.size(); i++) {
+-        modpaths += "r\""+VSFileSystem::Rootdir[i]+PATHSEP+moduledir+PATHSEP "builtin\",";
+         modpaths += "r\""+VSFileSystem::Rootdir[i]+PATHSEP+moduledir+PATHSEP "quests\",";
+         modpaths += "r\""+VSFileSystem::Rootdir[i]+PATHSEP+moduledir+PATHSEP "missions\",";
+         modpaths += "r\""+VSFileSystem::Rootdir[i]+PATHSEP+moduledir+PATHSEP "ai\",";
+@@ -299,7 +298,7 @@
+      *  while ((backslash=modpaths.find("\\"))!=std::string::npos) {
+      *  modpaths[backslash]='/';
+      *  }*/
+-    std::string changepath( "import sys\nprint sys.path\nsys.path = ["+modpaths+"] + sys.path\n" );
++    std::string changepath( "import sys\nprint sys.path\nsys.path += ["+modpaths+"] + sys.path\n" );
+     /*
+      *  std::string changepath ("import sys\nprint sys.path\nsys.path = ["
+      *                       "\""+VSFileSystem::datadir+DELIMSTR"modules"DELIMSTR"builtin\""
