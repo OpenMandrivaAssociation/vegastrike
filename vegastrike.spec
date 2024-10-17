@@ -9,7 +9,7 @@ Release:	4
 Summary:	3D OpenGL spaceflight simulator
 License:	GPLv2+
 Group:		Games/Arcade
-URL:		http://vegastrike.sourceforge.net/
+URL:		https://vegastrike.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.bz2
 Source1:	%{name}-manpages.tar.bz2
 Source11:	%{name}-16x16.png
